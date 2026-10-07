@@ -5,6 +5,12 @@ require_once __DIR__ . '/../includes/autorizar.php';
 
 exigirRol('PACIENTE');
 
+$mensajeExito = $_SESSION['mensaje_exito'] ?? '';
+$mensajeError = $_SESSION['mensaje_error'] ?? '';
+
+unset($_SESSION['mensaje_exito']);
+unset($_SESSION['mensaje_error']);
+
 // ---------------------------------------------------------
 // Actualizar automáticamente citas vencidas
 // ---------------------------------------------------------
@@ -118,6 +124,24 @@ $historial = $stmtHistorial->fetchAll();
     <h2>Mis citas</h2>
 
 
+    <?php if ($mensajeExito !== ''): ?>
+
+        <p>
+            <?= htmlspecialchars($mensajeExito) ?>
+        </p>
+
+    <?php endif; ?>
+
+
+    <?php if ($mensajeError !== ''): ?>
+
+        <p>
+            <?= htmlspecialchars($mensajeError) ?>
+        </p>
+
+    <?php endif; ?>
+
+
     <h3>Próximas citas</h3>
 
     <?php if (empty($proximas)): ?>
@@ -133,61 +157,92 @@ $historial = $stmtHistorial->fetchAll();
             <thead>
 
                 <tr>
-                    <th>ID</th>
-                    <th>Fecha y hora</th>
-                    <th>Médico</th>
-                    <th>Especialidad</th>
-                    <th>Centro</th>
-                    <th>Comuna</th>
-                    <th>Estado</th>
+                        <th>ID</th>
+                        <th>Fecha y hora</th>
+                        <th>Médico</th>
+                        <th>Especialidad</th>
+                        <th>Centro</th>
+                        <th>Comuna</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
                 </tr>
 
             </thead>
 
             <tbody>
 
-                <?php foreach ($proximas as $cita): ?>
+    <?php foreach ($proximas as $cita): ?>
 
-                    <tr>
+        <tr>
 
-                        <td>
-                            <?= htmlspecialchars($cita['id_cita']) ?>
-                        </td>
+            <td>
+                <?= htmlspecialchars($cita['id_cita']) ?>
+            </td>
 
-                        <td>
-                            <?= htmlspecialchars(
-                                date(
-                                    'd-m-Y H:i',
-                                    strtotime($cita['fecha_hora'])
-                                )
-                            ) ?>
-                        </td>
+            <td>
+                <?= htmlspecialchars(
+                    date(
+                        'd-m-Y H:i',
+                        strtotime($cita['fecha_hora'])
+                    )
+                ) ?>
+            </td>
 
-                        <td>
-                            <?= htmlspecialchars($cita['medico']) ?>
-                        </td>
+            <td>
+                <?= htmlspecialchars($cita['medico']) ?>
+            </td>
 
-                        <td>
-                            <?= htmlspecialchars($cita['especialidad']) ?>
-                        </td>
+            <td>
+                <?= htmlspecialchars($cita['especialidad']) ?>
+            </td>
 
-                        <td>
-                            <?= htmlspecialchars($cita['centro']) ?>
-                        </td>
+            <td>
+                <?= htmlspecialchars($cita['centro']) ?>
+            </td>
 
-                        <td>
-                            <?= htmlspecialchars($cita['comuna']) ?>
-                        </td>
+            <td>
+                <?= htmlspecialchars($cita['comuna']) ?>
+            </td>
 
-                        <td>
-                            <?= htmlspecialchars($cita['estado']) ?>
-                        </td>
+            <td>
+                <?= htmlspecialchars($cita['estado']) ?>
+            </td>
 
-                    </tr>
+            <td>
 
-                <?php endforeach; ?>
+                <a
+                    href="/paciente/reagendar_cita.php?id=<?= urlencode($cita['id_cita']) ?>"
+                >
+                    Reagendar
+                </a>
 
-            </tbody>
+                <br><br>
+
+                <form
+                    method="POST"
+                    action="/paciente/cancelar_cita.php"
+                    onsubmit="return confirm('¿Seguro que deseas cancelar esta cita?');"
+                >
+
+                    <input
+                        type="hidden"
+                        name="id_cita"
+                        value="<?= htmlspecialchars($cita['id_cita']) ?>"
+                    >
+
+                    <button type="submit">
+                        Cancelar
+                    </button>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+    <?php endforeach; ?>
+
+</tbody>
 
         </table>
 
