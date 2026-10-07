@@ -37,7 +37,9 @@ exigirRol('PACIENTE');
     </li>
 
     <li>
-        Agendar cita
+        <a href="/paciente/agendar_cita.php">
+            Agendar cita
+        </a>
     </li>
 
     <li>
