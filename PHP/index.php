@@ -2,38 +2,21 @@
 
 require_once __DIR__ . '/includes/auth.php';
 
-?>
+switch ($_SESSION['rol']) {
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    case 'PACIENTE':
+        header('Location: /paciente/index.php');
+        exit;
 
-    <title>SaludUSM</title>
-</head>
+    case 'MEDICO':
+        header('Location: /medico/index.php');
+        exit;
 
-<body>
+    case 'ADMIN':
+        header('Location: /admin/index.php');
+        exit;
 
-    <h1>SaludUSM</h1>
-
-    <p>
-        Sesión iniciada correctamente.
-    </p>
-
-    <p>
-        <strong>Correo:</strong>
-        <?= htmlspecialchars($_SESSION['email']) ?>
-    </p>
-
-    <p>
-        <strong>Rol:</strong>
-        <?= htmlspecialchars($_SESSION['rol']) ?>
-    </p>
-
-    <a href="/logout.php">
-        Cerrar sesión
-    </a>
-
-</body>
-</html>
+    default:
+        http_response_code(403);
+        exit('Rol de usuario no válido.');
+}
