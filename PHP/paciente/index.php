@@ -29,12 +29,32 @@ exigirRol('PACIENTE');
     </p>
 
     <ul>
-        <li>Mis citas</li>
-        <li>Agendar cita</li>
-        <li>Historial médico</li>
-        <li>Mis recetas</li>
-        <li>Mi perfil</li>
-    </ul>
+
+    <li>
+        <a href="/paciente/mis_citas.php">
+            Mis citas
+        </a>
+    </li>
+
+    <li>
+        Agendar cita
+    </li>
+
+    <li>
+        Historial médico
+    </li>
+
+    <li>
+        Mis recetas
+    </li>
+
+    <li>
+        <a href="/paciente/perfil.php">
+            Mi perfil
+        </a>
+    </li>
+
+</ul>
 
     <a href="/logout.php">
         Cerrar sesión
