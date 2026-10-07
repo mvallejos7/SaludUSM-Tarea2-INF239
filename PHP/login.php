@@ -17,7 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
 
     if ($email === '' || $password === '') {
+
         $error = 'Debes ingresar correo y contraseña.';
+
     } else {
 
         $stmt = $pdo->prepare("
@@ -41,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $usuario['activo'] &&
             password_verify($password, $usuario['password_hash'])
         ) {
+
             session_regenerate_id(true);
 
             $_SESSION['id_usuario'] = $usuario['id_usuario'];
@@ -54,15 +57,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Correo o contraseña incorrectos.';
     }
 }
+
 ?>
 
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Iniciar sesión - SaludUSM</title>
+
 </head>
 
 <body>
@@ -72,15 +84,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>Iniciar sesión</h2>
 
     <?php if ($error !== ''): ?>
+
         <p>
             <?= htmlspecialchars($error) ?>
         </p>
+
     <?php endif; ?>
+
 
     <form method="POST">
 
         <div>
-            <label for="email">Correo:</label>
+
+            <label for="email">
+                Correo:
+            </label>
 
             <input
                 type="email"
@@ -88,12 +106,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 name="email"
                 required
             >
+
         </div>
 
         <br>
 
+
         <div>
-            <label for="password">Contraseña:</label>
+
+            <label for="password">
+                Contraseña:
+            </label>
 
             <input
                 type="password"
@@ -101,6 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 name="password"
                 required
             >
+
         </div>
 
         <br>
@@ -111,5 +135,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     </form>
 
+
+    <br>
+
+    <p>
+        ¿No tienes una cuenta?
+
+        <a href="/registro.php">
+            Registrarse como paciente
+        </a>
+    </p>
+
 </body>
+
 </html>

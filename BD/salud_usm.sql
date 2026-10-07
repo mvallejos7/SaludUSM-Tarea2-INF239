@@ -99,20 +99,14 @@ CREATE TABLE centro_medico (
 -- =========================================================
 
 CREATE TABLE paciente (
-    id_paciente INT AUTO_INCREMENT,
-    id_usuario INT NOT NULL,
+    id_paciente INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL UNIQUE,
     nombre_completo VARCHAR(100) NOT NULL,
     fecha_nacimiento DATE NOT NULL,
     sexo VARCHAR(5) NOT NULL,
     id_prevision INT NOT NULL,
-    telefono_contacto VARCHAR(20),
+    telefono_contacto VARCHAR(20) NULL,
     comuna_residencia VARCHAR(60) NOT NULL,
-
-    CONSTRAINT pk_paciente
-        PRIMARY KEY (id_paciente),
-
-    CONSTRAINT uq_paciente_usuario
-        UNIQUE (id_usuario),
 
     CONSTRAINT chk_paciente_sexo
         CHECK (sexo IN ('M', 'F', 'Otro')),
@@ -128,7 +122,7 @@ CREATE TABLE paciente (
         REFERENCES prevision(id_prevision)
         ON UPDATE CASCADE
         ON DELETE RESTRICT
-) ENGINE = InnoDB;
+) ENGINE=InnoDB;
 
 
 -- =========================================================
