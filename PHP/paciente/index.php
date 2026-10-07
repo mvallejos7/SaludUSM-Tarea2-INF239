@@ -43,11 +43,15 @@ exigirRol('PACIENTE');
     </li>
 
     <li>
-        Historial médico
+        <a href="/paciente/historial.php">
+            Historial médico
+        </a>
     </li>
 
     <li>
-        Mis recetas
+        <a href="/paciente/recetas.php">
+            Mis recetas
+        </a>
     </li>
 
     <li>
