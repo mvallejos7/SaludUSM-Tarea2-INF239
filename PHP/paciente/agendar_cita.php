@@ -202,13 +202,24 @@ if (
 
         $stmtOcupados = $pdo->prepare("
             SELECT
-                DATE_FORMAT(fecha_hora, '%H:%i') AS hora
-            FROM cita
-            WHERE DATE(fecha_hora) = ?
-              AND (
-                    id_medico = ?
-                    OR id_paciente = ?
-              )
+                DATE_FORMAT(c.fecha_hora, '%H:%i')
+
+            FROM cita c
+
+            JOIN estado_cita ec
+                ON c.id_estado_cita = ec.id_estado_cita
+
+            WHERE DATE(c.fecha_hora) = ?
+
+            AND ec.nombre IN (
+                    'Reservada',
+                    'Confirmada'
+            )
+
+            AND (
+                    c.id_medico = ?
+                    OR c.id_paciente = ?
+            )
         ");
 
         $stmtOcupados->execute([
@@ -310,12 +321,23 @@ if ($accion === 'crear_cita') {
 
             $stmtConflicto = $pdo->prepare("
                 SELECT COUNT(*)
-                FROM cita
-                WHERE fecha_hora = ?
-                  AND (
-                        id_medico = ?
-                        OR id_paciente = ?
-                  )
+
+                FROM cita c
+
+                JOIN estado_cita ec
+                    ON c.id_estado_cita = ec.id_estado_cita
+
+                WHERE c.fecha_hora = ?
+
+                AND ec.nombre IN (
+                        'Reservada',
+                        'Confirmada'
+                )
+
+                AND (
+                        c.id_medico = ?
+                        OR c.id_paciente = ?
+                )
             ");
 
             $stmtConflicto->execute([

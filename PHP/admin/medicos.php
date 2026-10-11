@@ -453,6 +453,114 @@ if ($accion === 'editar') {
                 );
             }
 
+
+            // ---------------------------------------------
+            // Proteger especialidades y centros que tengan
+            // citas futuras Reservadas o Confirmadas
+            // ---------------------------------------------
+
+            $especialidadesSeleccionadasStr =
+                array_map(
+                    'strval',
+                    $especialidadesSeleccionadas
+                );
+
+            $centrosSeleccionadosStr =
+                array_map(
+                    'strval',
+                    $centrosSeleccionados
+                );
+
+
+            $stmtCitasFuturas =
+                $pdo->prepare("
+                    SELECT DISTINCT
+                        c.id_especialidad,
+                        e.nombre AS especialidad,
+                        c.codigo_centro,
+                        cm.nombre AS centro
+
+                    FROM cita c
+
+                    JOIN estado_cita ec
+                        ON c.id_estado_cita =
+                        ec.id_estado_cita
+
+                    JOIN especialidad e
+                        ON c.id_especialidad =
+                        e.id_especialidad
+
+                    JOIN centro_medico cm
+                        ON c.codigo_centro =
+                        cm.codigo_centro
+
+                    WHERE c.id_medico = ?
+
+                    AND c.fecha_hora >
+                        CURRENT_TIMESTAMP
+
+                    AND ec.nombre IN (
+                        'Reservada',
+                        'Confirmada'
+                    )
+                ");
+
+            $stmtCitasFuturas->execute([
+                $idMedico
+            ]);
+
+            $citasFuturas =
+                $stmtCitasFuturas->fetchAll();
+
+
+            foreach (
+                $citasFuturas
+                as $citaFutura
+            ) {
+
+                // -----------------------------------------
+                // No permitir quitar especialidad usada
+                // por una cita futura activa
+                // -----------------------------------------
+
+                if (
+                    !in_array(
+                        (string)$citaFutura['id_especialidad'],
+                        $especialidadesSeleccionadasStr,
+                        true
+                    )
+                ) {
+
+                    throw new Exception(
+                        'No se puede quitar la especialidad "'
+                        . $citaFutura['especialidad']
+                        . '" porque el médico tiene citas futuras Reservadas o Confirmadas con esa especialidad.'
+                    );
+                }
+
+
+                // -----------------------------------------
+                // No permitir quitar centro usado
+                // por una cita futura activa
+                // -----------------------------------------
+
+                if (
+                    !in_array(
+                        (string)$citaFutura['codigo_centro'],
+                        $centrosSeleccionadosStr,
+                        true
+                    )
+                ) {
+
+                    throw new Exception(
+                        'No se puede quitar el centro "'
+                        . $citaFutura['centro']
+                        . '" porque el médico tiene citas futuras Reservadas o Confirmadas en ese centro.'
+                    );
+                }
+            }
+
+
             // ---------------------------------------------
             // Actualizar usuario
             // ---------------------------------------------
