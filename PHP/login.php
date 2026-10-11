@@ -146,6 +146,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </a>
     </p>
 
+<br><br>
+
+<a href="/buscar_medicos.php">
+    Buscar médicos
+</a>
+
 </body>
 
 </html>

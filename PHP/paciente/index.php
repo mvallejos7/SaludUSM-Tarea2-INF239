@@ -60,6 +60,12 @@ exigirRol('PACIENTE');
         </a>
     </li>
 
+    <li>
+        <a href="/buscar_medicos.php">
+            Buscar médicos
+        </a>
+    </li>
+
 </ul>
 
     <a href="/logout.php">
