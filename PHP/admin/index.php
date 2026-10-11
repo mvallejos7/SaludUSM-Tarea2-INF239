@@ -57,7 +57,9 @@ exigirRol('ADMIN');
         </li>
 
         <li>
-            Estadísticas
+            <a href="/admin/estadisticas.php">
+                Estadísticas
+            </a>
         </li>
 
     </ul>
