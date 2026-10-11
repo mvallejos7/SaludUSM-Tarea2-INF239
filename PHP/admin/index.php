@@ -74,7 +74,13 @@ exigirRol('ADMIN');
             </a>
         </li>
 
-    </ul>
+        <li>
+            <a href="/admin/perfil.php">
+                Mi perfil
+            </a>
+        </li>
+
+        </ul>
 
 
     <br>

@@ -55,8 +55,10 @@ exigirRol('MEDICO');
         </li>
 
         <li>
-            Mi perfil
-        </li>
+    <a href="/medico/perfil.php">
+        Mi perfil
+    </a>
+</li>
 
     </ul>
 
