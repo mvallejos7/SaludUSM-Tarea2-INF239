@@ -35,7 +35,11 @@ exigirRol('MEDICO');
             </a>
         </li>
         <li>Registrar atención</li>
-        <li>Historial de pacientes</li>
+        <li>
+            <a href="/medico/historial_pacientes.php">
+                Historial de pacientes
+            </a>
+        </li>
         <li>Mi perfil</li>
     </ul>
 
