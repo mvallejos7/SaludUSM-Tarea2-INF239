@@ -103,17 +103,37 @@ $sql = "
       AND u.rol = 'MEDICO'
 ";
 
-$parametros = [];
-
 // ---------------------------------------------------------
-// Filtro por nombre
+// Filtro por nombre o especialidad
 // ---------------------------------------------------------
 
 if ($nombre !== '') {
 
     $sql .= "
-        AND m.nombre_completo LIKE ?
+        AND (
+            m.nombre_completo LIKE ?
+
+            OR EXISTS (
+                SELECT 1
+
+                FROM medico_especialidad me_nombre
+
+                JOIN especialidad e_nombre
+                    ON me_nombre.id_especialidad =
+                       e_nombre.id_especialidad
+
+                WHERE me_nombre.id_medico =
+                      m.id_medico
+
+                  AND me_nombre.activo = 1
+
+                  AND e_nombre.nombre LIKE ?
+            )
+        )
     ";
+
+    $parametros[] =
+        '%' . $nombre . '%';
 
     $parametros[] =
         '%' . $nombre . '%';
@@ -249,7 +269,7 @@ $medicos =
     <form method="GET">
 
         <label for="nombre">
-            Nombre:
+            Nombre o especialidad:
         </label>
 
         <input
@@ -257,7 +277,7 @@ $medicos =
             id="nombre"
             name="nombre"
             value="<?= htmlspecialchars($nombre) ?>"
-            placeholder="Nombre del médico"
+            placeholder="Ej: Medico01 o Cardio"
         >
 
         <br><br>

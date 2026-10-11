@@ -15,7 +15,7 @@ Base de datos:
 salud_usm
 
 Repositorio GitHub:
-https://github.com/mvallejos7/SaludUSM-Tarea2-INF239?utm_source=chatgpt.com
+https://github.com/mvallejos7/SaludUSM-Tarea2-INF239
 
 
 INSTRUCCIONES DE EJECUCION
