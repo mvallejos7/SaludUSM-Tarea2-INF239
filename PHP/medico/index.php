@@ -29,18 +29,35 @@ exigirRol('MEDICO');
     </p>
 
     <ul>
+
         <li>
             <a href="/medico/agenda.php">
                 Mi agenda
             </a>
         </li>
-        <li>Registrar atención</li>
+
         <li>
             <a href="/medico/historial_pacientes.php">
                 Historial de pacientes
             </a>
         </li>
-        <li>Mi perfil</li>
+
+        <li>
+            <a href="/buscar_medicos.php">
+                Buscar médicos
+            </a>
+        </li>
+
+        <li>
+            <a href="/buscar_citas.php">
+                Búsqueda avanzada de citas
+            </a>
+        </li>
+
+        <li>
+            Mi perfil
+        </li>
+
     </ul>
 
     <a href="/logout.php">

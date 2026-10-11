@@ -62,6 +62,18 @@ exigirRol('ADMIN');
             </a>
         </li>
 
+        <li>
+            <a href="/buscar_medicos.php">
+                Buscar médicos
+            </a>
+        </li>
+
+        <li>
+            <a href="/buscar_citas.php">
+                Búsqueda avanzada de citas
+            </a>
+        </li>
+
     </ul>
 
 

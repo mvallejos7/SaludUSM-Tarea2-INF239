@@ -61,16 +61,22 @@ exigirRol('PACIENTE');
     </li>
 
     <li>
-    <a href="/buscar_medicos.php">
-        Buscar médicos
-    </a>
-</li>
+        <a href="/buscar_medicos.php">
+            Buscar médicos
+        </a>
+    </li>
 
-<li>
-    <a href="/paciente/eliminar_cuenta.php">
-        Eliminar cuenta
-    </a>
-</li>
+    <li>
+        <a href="/buscar_citas.php">
+            Búsqueda avanzada de citas
+        </a>
+    </li>
+
+    <li>
+        <a href="/paciente/eliminar_cuenta.php">
+            Eliminar cuenta
+        </a>
+    </li>
 
 </ul>
 
