@@ -139,20 +139,56 @@ if ($idPaciente !== '') {
         SELECT
             a.id_atencion,
             c.fecha_hora,
+
             e.nombre AS especialidad,
+
+            m.nombre_completo AS medico,
+
             cm.nombre AS centro,
+
             a.motivo_consulta,
             a.observaciones_clinicas,
 
-            GROUP_CONCAT(
-                DISTINCT CONCAT(
-                    d.codigo_diagnostico,
-                    ' - ',
-                    d.descripcion
+            (
+                SELECT GROUP_CONCAT(
+                    DISTINCT CONCAT(
+                        d.codigo_diagnostico,
+                        ' - ',
+                        d.descripcion
+                    )
+                    ORDER BY d.codigo_diagnostico
+                    SEPARATOR ' | '
                 )
-                ORDER BY d.codigo_diagnostico
-                SEPARATOR ' | '
-            ) AS diagnosticos
+
+                FROM atencion_diagnostico ad
+
+                JOIN diagnostico d
+                    ON ad.codigo_diagnostico =
+                    d.codigo_diagnostico
+
+                WHERE ad.id_atencion =
+                    a.id_atencion
+            ) AS diagnosticos,
+
+            (
+                SELECT GROUP_CONCAT(
+                    CONCAT(
+                        r.medicamento,
+                        ' - ',
+                        r.dosis,
+                        ' - ',
+                        r.dias_tratamiento,
+                        ' días'
+                    )
+                    ORDER BY r.id_receta
+                    SEPARATOR ' | '
+                )
+
+                FROM receta r
+
+                WHERE r.id_atencion =
+                    a.id_atencion
+            ) AS recetas
 
         FROM atencion a
 
@@ -160,35 +196,24 @@ if ($idPaciente !== '') {
             ON a.id_cita = c.id_cita
 
         JOIN especialidad e
-            ON c.id_especialidad = e.id_especialidad
+            ON c.id_especialidad =
+            e.id_especialidad
+
+        JOIN medico m
+            ON c.id_medico =
+            m.id_medico
 
         JOIN centro_medico cm
-            ON c.codigo_centro = cm.codigo_centro
-
-        LEFT JOIN atencion_diagnostico ad
-            ON a.id_atencion = ad.id_atencion
-
-        LEFT JOIN diagnostico d
-            ON ad.codigo_diagnostico =
-               d.codigo_diagnostico
+            ON c.codigo_centro =
+            cm.codigo_centro
 
         WHERE c.id_paciente = ?
-          AND c.id_medico = ?
-
-        GROUP BY
-            a.id_atencion,
-            c.fecha_hora,
-            e.nombre,
-            cm.nombre,
-            a.motivo_consulta,
-            a.observaciones_clinicas
 
         ORDER BY c.fecha_hora DESC
     ");
 
     $stmtHistorial->execute([
-        $idPaciente,
-        $idMedico
+        $idPaciente
     ]);
 
     $historial = $stmtHistorial->fetchAll();
@@ -360,6 +385,13 @@ if ($idPaciente !== '') {
                 </p>
 
                 <p>
+                    <strong>Médico:</strong>
+                    <?= htmlspecialchars(
+                        $atencion['medico']
+                    ) ?>
+                </p>
+
+                <p>
                     <strong>Centro:</strong>
                     <?= htmlspecialchars(
                         $atencion['centro']
@@ -388,6 +420,15 @@ if ($idPaciente !== '') {
                     <?= htmlspecialchars(
                         $atencion['diagnosticos']
                         ?? 'Sin diagnósticos registrados'
+                    ) ?>
+                </p>
+
+                <p>
+                    <strong>Recetas:</strong>
+
+                    <?= htmlspecialchars(
+                        $atencion['recetas']
+                        ?? 'Sin recetas registradas'
                     ) ?>
                 </p>
 
