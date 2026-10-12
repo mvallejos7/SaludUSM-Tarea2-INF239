@@ -194,7 +194,7 @@ Para realizar esta actualizacion se utiliza el procedimiento almacenado:
 
 sp_cancelar_citas_vencidas
 
-El procedimiento se ejecuta desde la aplicacion antes de mostrar informacion en secciones que trabajan con citas, como Mis citas, Agenda y Estadisticas.
+El procedimiento se ejecuta desde la aplicacion antes de mostrar informacion en secciones que trabajan con citas, como Mis citas, Agenda, Busqueda avanzada de citas y Estadisticas.
 
 
 ELIMINACION DE CUENTA DEL PACIENTE
@@ -234,7 +234,9 @@ trg_validar_atencion
 
 DIAGNOSTICOS
 
-Una atencion puede contener uno o mas diagnosticos.
+Una atencion puede tener uno o mas diagnosticos asociados.
+
+La aplicacion permite agregar, editar y quitar diagnosticos. Una vez que una atencion posee diagnosticos asociados, no se permite eliminar el ultimo diagnostico.
 
 Los diagnosticos utilizan codigo CIE-10 y descripcion.
 
@@ -276,14 +278,14 @@ BUSQUEDA DE MEDICOS
 
 Todos los roles pueden utilizar la busqueda de medicos.
 
-Es posible buscar y filtrar medicos utilizando:
-- Nombre.
+La barra de busqueda permite buscar utilizando un fragmento del nombre del medico o de una de sus especialidades.
+
+Adicionalmente, es posible combinar filtros por:
 - Especialidad.
 - Centro medico.
 - Comuna.
 
 Solamente se consideran medicos y asociaciones activas.
-
 
 BUSQUEDA AVANZADA DE CITAS
 

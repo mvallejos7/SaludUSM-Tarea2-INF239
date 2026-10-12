@@ -237,11 +237,8 @@ if ($accion === 'editar') {
                 $idAtencion
             ]);
 
-            if ($stmtEditar->rowCount() >= 0) {
-
-                $_SESSION['mensaje_exito'] =
-                    'Receta actualizada correctamente.';
-            }
+            $_SESSION['mensaje_exito'] =
+                'Receta actualizada correctamente.';
 
         } catch (PDOException $e) {
 

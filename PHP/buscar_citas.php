@@ -2,6 +2,16 @@
 
 require_once __DIR__ . '/includes/auth.php';
 
+// ---------------------------------------------------------
+// Actualizar citas vencidas
+// ---------------------------------------------------------
+
+$stmtActualizar = $pdo->query("
+    CALL sp_cancelar_citas_vencidas()
+");
+
+$stmtActualizar->closeCursor();
+
 
 // ---------------------------------------------------------
 // Usuario y rol actual

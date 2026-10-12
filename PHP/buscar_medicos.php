@@ -56,6 +56,8 @@ $centros =
 // Construir búsqueda dinámica
 // ---------------------------------------------------------
 
+$parametros = [];
+
 $sql = "
     SELECT
         m.id_medico,
