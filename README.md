@@ -24,19 +24,19 @@ INSTRUCCIONES DE EJECUCION
 
 2. Verificar que PHP tenga habilitadas las extensiones PDO y PDO MySQL.
 
-3. Abrir PowerShell o una terminal.
+3. Descomprimir el archivo de la tarea.
 
-4. Iniciar MySQL utilizando un usuario con permisos para crear bases de datos:
+4. Abrir PowerShell o una terminal y ubicarse en la carpeta principal del proyecto:
+
+   cd C:\RUTA\T2-202430509-3-202330505-7
+
+5. Iniciar MySQL utilizando un usuario con permisos para crear bases de datos:
 
    mysql --default-character-set=utf8mb4 -u root -p
 
-5. Ejecutar el archivo:
+6. Desde el cliente MySQL ejecutar:
 
-   BD/salud_usm.sql
-
-   Desde el cliente MySQL se puede ejecutar con:
-
-   SOURCE C:/SaludUSM/BD/salud_usm.sql;
+   SOURCE BD/salud_usm.sql;
 
    Este script elimina la base de datos salud_usm si ya existe y luego la crea nuevamente.
 
@@ -51,27 +51,16 @@ INSTRUCCIONES DE EJECUCION
    - Trigger.
    - Usuario MySQL utilizado por la aplicacion PHP.
 
-6. El usuario MySQL utilizado por PHP es:
-
-   Usuario:
-   salud_app
-
-   Contraseña:
-   SaludUSM_DB_2026!
-
-7. Abrir otra ventana de PowerShell y ubicarse en la carpeta del proyecto:
-
-   cd C:\SaludUSM
-
-8. Iniciar el servidor PHP:
+7. Salir del cliente MySQL y, desde una terminal ubicada en la carpeta principal del proyecto, ejecutar:
 
    php -S localhost:8000 -t PHP
 
-9. Abrir la aplicacion desde el navegador ingresando a:
+8. Abrir la aplicacion desde el navegador ingresando a:
 
    localhost:8000
 
-10. Iniciar sesion utilizando alguno de los usuarios de prueba indicados a continuacion.
+9. Iniciar sesion utilizando alguno de los usuarios de prueba indicados a continuacion.
+
 
 
 USUARIOS DE PRUEBA
@@ -403,14 +392,8 @@ Contiene el archivo salud_usm.sql con la base de datos completa.
 PHP:
 Contiene los archivos de la aplicacion web.
 
-CSS:
-Contiene los archivos de estilos de la aplicacion.
-
-JS:
-Contiene los archivos JavaScript utilizados por la aplicacion.
-
 PDF:
-Contendra el documento con el proceso de normalizacion hasta 3FN.
+Contiene el documento con el proceso de normalizacion hasta 3FN.
 
 README.md:
 Contiene las instrucciones y consideraciones necesarias para ejecutar y probar el proyecto.
